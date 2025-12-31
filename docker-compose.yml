@@ -5,6 +5,7 @@ services:
       - "8000:8000"
     environment:
       # ← Используем ТЕ ЖЕ ИМЕНА, что и в .env и settings.py
+      - settings_module=${DJANGO_SETTINGS_MODULE}
       - SECRET_KEY=${SECRET_KEY}
       - ALLOWED_HOSTS=${ALLOWED_HOSTS}
       - DB_NAME=${DB_NAME}

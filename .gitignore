@@ -23,7 +23,7 @@ local_settings.py
 # Media & static files (if local)
 media/
 /media/
-/static/
+# /static/
 /staticfiles/
 
 # Logs & temporary files

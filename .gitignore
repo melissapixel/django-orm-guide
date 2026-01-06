@@ -25,6 +25,7 @@ media/
 /media/
 # /static/
 /staticfiles/
+help
 
 # Logs & temporary files
 *.log

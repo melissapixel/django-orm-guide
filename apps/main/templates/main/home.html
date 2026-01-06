@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Книжный клуб</title>
+    <style>
+        .book { margin-bottom: 1em; padding: 1em; border: 1px solid #eee; }
+        .filters { background: #f9f9f9; padding: 1em; margin-bottom: 2em; }
+        label { display: inline-block; width: 100px; }
+    </style>
+</head>
+<body>
+    <h1>Книжный клуб</h1>
+
+    <div class="filters">
+        <form method="get">
+            <label>Год от:</label>
+            <input type="number" name="year_from" value="{{ year_from }}">
+
+            <label>Год до:</label>
+            <input type="number" name="year_to" value="{{ year_to }}">
+
+            <label>Автор:</label>
+            <select name="author">
+                <option value="">Любой</option>
+                {% for author in authors %}
+                    <option value="{{ author.id }}" {% if selected_author == author.id|stringformat:"s" %}selected{% endif %}> 
+                        <!-- — потому что GET возвращает строки, а id — int. -->
+                        {{ author.name }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <label>Жанр:</label>
+            <select name="genre">
+                <option value="">Любой</option>
+                {% for genre in genres %}
+                    <option value="{{ genre.id }}" {% if selected_genre == genre.id|stringformat:"s" %}selected{% endif %}>
+                        {{ genre.name }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Фильтровать</button>
+        </form>
+    </div>
+
+    <div class="books">
+        {% for book in books %}
+            <div class="book">
+                <h3>{{ book.title }}</h3>
+                <p><strong>Автор:</strong> {{ book.author.name }}</p>
+                <p><strong>Год:</strong> {{ book.published_year }}</p>
+                <p><strong>Жанры:</strong> 
+                    {% for genre in book.genres.all %}
+                        {{ genre.name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+            </div>
+        {% empty %}
+            <p>Книг по вашему запросу не найдено.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>

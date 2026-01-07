@@ -2,6 +2,14 @@ import django_filters
 from .models import Book, Author, Genre
 
 class BookFilter(django_filters.FilterSet):     # — основной класс для фильтрации
+    
+    # поиск по названию
+    title = django_filters.CharFilter(
+        field_name='title',
+        lookup_expr='icontains',  # ← case-insensitive contains
+        label='Название книги:'
+    )
+
     # Фильтр по году: от
     year_from = django_filters.NumberFilter(
         field_name='published_year',    # поле модели

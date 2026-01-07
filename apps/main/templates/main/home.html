@@ -13,36 +13,22 @@
 
     <div class="filters">
         <form method="get">
-            <label>Год от:</label>
-            <input type="number" name="year_from" value="{{ year_from }}">
-
-            <label>Год до:</label>
-            <input type="number" name="year_to" value="{{ year_to }}">
-
-            <label>Автор:</label>
-            <select name="author">
-                <option value="">Любой</option>
-                {% for author in authors %}
-                    <option value="{{ author.id }}" {% if selected_author == author.id|stringformat:"s" %}selected{% endif %}> 
-                        <!-- — потому что GET возвращает строки, а id — int. -->
-                        {{ author.name }}
-                    </option>
-                {% endfor %}
-            </select>
-
-            <label>Жанр:</label>
-            <select name="genre">
-                <option value="">Любой</option>
-                {% for genre in genres %}
-                    <option value="{{ genre.id }}" {% if selected_genre == genre.id|stringformat:"s" %}selected{% endif %}>
-                        {{ genre.name }}
-                    </option>
-                {% endfor %}
-            </select>
-
+            {{ filter.form.as_p }}  <!-- ← автоматическая форма! -->
             <button type="submit">Фильтровать</button>
+            <a href="{% url 'home' %}">Сбросить</a>
         </form>
     </div>
+
+    <!-- показ используемых юзером фильтров
+    {% if filter.form.year_from.value or filter.form.year_to.value or filter.form.author.value or filter.form.genre.value %}
+        <div class="active-filters">
+            <strong>Активные фильтры:</strong>
+            {% if filter.form.year_from.value %}Год от: {{ filter.form.year_from.value }}{% endif %}
+            {% if filter.form.year_to.value %}Год до: {{ filter.form.year_to.value }}{% endif %}
+            {% if filter.form.author.value %}Автор: {{ filter.form.author.value }}{% endif %}
+            {% if filter.form.genre.value %}Жанр: {{ filter.form.genre.value }}{% endif %}
+        </div>
+    {% endif %} -->
 
     <div class="books">
         {% for book in books %}

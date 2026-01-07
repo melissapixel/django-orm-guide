@@ -1,3 +1,4 @@
+{% load static query_transform %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,5 +47,25 @@
             <p>Книг по вашему запросу не найдено.</p>
         {% endfor %}
     </div>
+
+    <!-- Добавь пагинацию внизу -->
+    <div class="pagination">
+        <span class="page-links">
+            {% if books.has_previous %}
+                <a href="?{% url_replace request 'page' 1 %}">« первая</a>
+                <a href="?{% url_replace request 'page' books.previous_page_number %}">‹ предыдущая</a>
+            {% endif %}
+
+            <span class="current">
+                Страница {{ books.number }} из {{ books.paginator.num_pages }}
+            </span>
+
+            {% if books.has_next %}
+                <a href="?{% url_replace request 'page' books.next_page_number %}">следующая ›</a>
+                <a href="?{% url_replace request 'page' books.paginator.num_pages %}">последняя »</a>
+            {% endif %}
+        </span>
+    </div>
+
 </body>
 </html>
